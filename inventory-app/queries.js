@@ -24,17 +24,29 @@ const getMovieById = (request, response) => {
         response.status(200).json(results.rows)
     })
 }
-const createMovie = (request, response) => {
-    const {
-        title,
-        description
-    } = request.body
-    pool.query('INSERT INTO movies (title, description) VALUES ($1, $2)', [title, description], (error, results) => {
+const getMoviesByTitle = (request, response) => {
+    const title = request.query.title;
+    if (!title){
+        getMovies(request, response)
+        return
+    }
+    pool.query('SELECT * FROM movies WHERE title ILIKE $1', [`%${title}%`], (error, results) => {
         if (error) {
-            throw error
+            throw error;
         }
-        response.status(201).send(`movie added with ID: ${result.insertId}`)
-    })
+        response.status(200).json(results.rows);
+    });
+}
+
+const createMovie = (request, response) => {
+    //console.log(response)
+    const { title, description } = request.body;
+    pool.query('INSERT INTO movies (title, description) VALUES ($1, $2) RETURNING id', [title, description], (error, results) => {
+        if (error) {
+            throw error;
+        }
+        response.status(201).send(`Movie added with ID: ${results.rows[0].id}`);
+    });
 }
 const updateMovie = (request, response) => {
     const id = parseInt(request.params.id)
@@ -65,6 +77,7 @@ const deleteMovie = (request, response) => {
 module.exports = {
     getMovies,
     getMovieById,
+    getMoviesByTitle,
     createMovie,
     updateMovie,
     deleteMovie,

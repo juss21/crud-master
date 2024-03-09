@@ -8,7 +8,8 @@ app.use(express.json());
 
 // Define routes
 app.get('/', db.getMovies)
-app.get('/movies', db.getMovies)
+//app.get('/movies', db.getMovies)
+app.get('/movies', db.getMoviesByTitle)
 app.get('/movies/:id', db.getMovieById)
 app.post('/movies', db.createMovie)
 app.put('/movies/:id', db.updateMovie)
