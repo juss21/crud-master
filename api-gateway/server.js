@@ -4,13 +4,13 @@ const { createProxyMiddleware, fixRequestBody } = require('http-proxy-middleware
 const app = express();
 
 
-const INVENTORY_IP = '192.168.75.66'
-const INVENTORY_PORT = '5432'
+const INVENTORY_IP = '192.168.75.10'
+const INVENTORY_PORT = '8080'
 const RABBITMQ_USERNAME = 'juss'
 const RABBITMQ_PASSWORD = '123'
 const RABBITMQ_NAME = 'test-queue'
-const BILLING_IP = '192.168.75.126'
-const BILLING_PORT = '5678'
+const BILLING_IP = '192.168.75.11'
+const BILLING_PORT = '5672'
 const GATEWAY_PORT = '50000'
 
 
