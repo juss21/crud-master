@@ -6,14 +6,12 @@ const app = express();
 
 app.use(express.json());
 
-// Define routes
-app.get('/', db.getMovies)
-//app.get('/movies', db.getMovies)
-app.get('/movies', db.getMoviesByTitle)
-app.get('/movies/:id', db.getMovieById)
-app.post('/movies', db.createMovie)
-app.put('/movies/:id', db.updateMovie)
-app.delete('/movies/:id', db.deleteMovie)
+app.get('/api/movies', db.getMoviesByTitle)
+app.get('/api/movies/:id', db.getMovieById)
+app.post('/api/movies/', db.createMovie)
+app.put('/api/movies/:id', db.updateMovie)
+app.delete('/api/movies/:id', db.deleteMovie)
+app.delete('/api/movies', db.deleteAllMovies)
 
 // Start the server
 app.listen(port, () => {

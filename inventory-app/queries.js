@@ -41,6 +41,13 @@ const getMoviesByTitle = (request, response) => {
 const createMovie = (request, response) => {
     //console.log(response)
     const { title, description } = request.body;
+    if (!title) {
+        response.status(400).send({
+            message: "Content can not be empty! request: " + request.body
+        });
+        return;
+    }
+
     pool.query('INSERT INTO movies (title, description) VALUES ($1, $2) RETURNING id', [title, description], (error, results) => {
         if (error) {
             throw error;
@@ -65,6 +72,7 @@ const updateMovie = (request, response) => {
         }
     )
 }
+
 const deleteMovie = (request, response) => {
     const id = parseInt(request.params.id)
     pool.query('DELETE FROM movies WHERE id = $1', [id], (error, results) => {
@@ -74,6 +82,17 @@ const deleteMovie = (request, response) => {
         response.status(200).send(`movie deleted with ID: ${id}`)
     })
 }
+
+const deleteAllMovies = (request, response) => {
+    const id = parseInt(request.params.id)
+    pool.query('DELETE FROM movies', (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).send(`All movies deleted! Gj, buddy.`)
+    })
+}
+
 module.exports = {
     getMovies,
     getMovieById,
@@ -81,4 +100,5 @@ module.exports = {
     createMovie,
     updateMovie,
     deleteMovie,
+    deleteAllMovies,
 }
