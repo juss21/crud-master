@@ -19,6 +19,9 @@ Clone the project, and write `vagrant up`. Then it should set up project to use.
 
 #### API Gateway IP address: 192.168.56.12:8083
 
-### [Audit video]()
+### [Audit video](https://youtu.be/cGk-uWAe7fs)
+- In the video, I skipped vm setup with vagrant, because it takes around 5-10 minutes to run that command.
+
+If you have any questions about the task, feel free to ask me. 
 
 ### Author: [Juss](https://01.kood.tech/git/juss)
