@@ -24,7 +24,7 @@ Clone or download the project, and write `vagrant up`. It should set up 3 differ
 
 - In the video, I skipped vm setup with vagrant, because it takes around 5-10 minutes to run that command.
 
-#
+## 
 If you have any questions about the task, feel free to ask me. 
 
 ### Author: [Juss](https://01.kood.tech/git/juss)
