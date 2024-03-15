@@ -1,4 +1,6 @@
-import { pool } from "../config/db_config" 
+//import { pool } from "../config/db_config" 
+const pool = require("../config/db_config" )
+
    
     const getMovies = (request, response) => {
     pool.query('SELECT * FROM movies ORDER BY id ASC', (error, results) => {

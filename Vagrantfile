@@ -16,6 +16,14 @@ Vagrant.configure("2") do |config|
   File.read(".env").split("\n").each do |ef|
     env[ef.split("=")[0]] = ef.split("=")[1]
   end 
+
+  # if Vagrant.has_plugin?("vagrant-proxyconf")
+   # config.proxy.http     = "http://#{env["INVENTORY_IP"]}:#{env['INVENTORY_PORT']}"
+   # config.proxy.http     = "http://#{env["GATEWAY_IP"]}:#{env['GATEWAY_PORT']}"
+   # config.proxy.http     = "http://#{env["BILLING_IP"]}:#{env['BILLING_PORT']}"
+   # config.proxy.no_proxy = "localhost,127.0.0.1,.example.com"
+ # end
+
   config.vm.define "inventory" do |inventory|    
     inventory.vm.provision "shell", path: "scripts/inventory.sh", :run => 'always',   privileged: false
     inventory.vm.network "private_network", ip: env['INVENTORY_IP']

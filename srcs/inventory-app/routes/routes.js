@@ -1,6 +1,6 @@
 module.exports = app => {
 
-const db = require('./controllers/queries.js')
+const db = require('../controllers/queries.js')
 var router = require("express").Router();
 
 router.get('/', db.getMoviesByTitle)

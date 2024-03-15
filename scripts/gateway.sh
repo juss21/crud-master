@@ -15,3 +15,5 @@ npm install pm2@latest -g ; pm2 update
 cd /vagrant/srcs/api-gateway
 npm install
 pm2 start --watch -f server.js -n api-gateway --watch
+
+exit

@@ -13,8 +13,20 @@ nvm use node
 npm install pm2@latest -g ; pm2 update
 
 sudo -u postgres psql template1 -c "ALTER USER postgres WITH PASSWORD 'vagrant'"
-sudo -u postgres createdb movies || echo "Database already exists"
+sudo -u postgres createdb movies 
+
+if sudo -u postgres psql movies -c "SELECT EXISTS (SELECT 1 FROM pg_catalog.pg_tables WHERE tablename = 'movies');" | grep -q 'f'; then
+    sudo -u postgres psql movies -c "CREATE TABLE movies (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR (50) NOT NULL,
+        description TEXT
+    );"
+else
+    echo "Table 'movies' already exists."
+fi
 
 cd /vagrant/srcs/inventory-app
 npm install
 pm2 start -f server.js -n inventory-app --watch
+
+exit

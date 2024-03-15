@@ -1,4 +1,5 @@
 const amqp = require('amqplib');
+const db = require("./models");
 const Order = require("./controllers/order.js");
 
 const { RABBITMQ_USERNAME,
@@ -8,16 +9,23 @@ const { RABBITMQ_USERNAME,
     BILLING_PORT,
 } = process.env
 
-
 // RabbitMQ connection URL
-const rabbitUrl = `amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@${BILLING_IP}:${BILLING_PORT}`;
+//const rabbitUrl = `amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@${BILLING_IP}:${BILLING_PORT}`;
+
+db.sequelize.sync({ force: false })
+    .then(() => {
+        console.log("Synced db.");
+    })
+    .catch((err) => {
+        console.log("Failed to sync db: " + err.message);
+    });
 
 var channel, connection;
 connectQueue()  
  
 async function connectQueue() {
     try {
-        connection = await amqp.connect(rabbitUrl);
+        connection = await amqp.connect(`amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@${BILLING_IP}:${BILLING_PORT}`);
         channel = await connection.createChannel();
         
         await channel.assertQueue(RABBITMQ_NAME)
